@@ -144,11 +144,12 @@
         </script>
 
         <div id="menudown", class="menudown">
-            <h1 class="text-language", style="display: none; right: 10%; top: 50px;", id="language">Language:</h1>
-            <select class="text-language", style="right: 0; display: none; top: 70px;", onchange="changelanguage(this.value)", id="selectlanguage">
-                <option class="text-language", value="en">EN</option>
-                <option class="text-language", value="tr">TR</option>
-            </select>
+            <h1 class="text-language", style="display: none; right: 10%; top: 50px;", id="language">Language:
+                <select class="text-language", style="display: none", onchange="changelanguage(this.value)", id="selectlanguage">
+                    <option class="text-language", value="en">EN</option>
+                    <option class="text-language", value="tr">TR</option>
+                </select>
+            </h1>
             <h1 class="text-menudown", style="top: 90px; display: none;", id="home">Home</h1>
             <h1 class="text-menudown", style="top: 140px; display: none;", id="aboutme">About Me</h1>
             <button  id="spider", class="spider-button-down", onclick="movedownmenu()">,
