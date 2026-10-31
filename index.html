@@ -114,6 +114,17 @@
                 bottom: 0;
             }
 
+            .button-text {
+                position: relative;
+                top: 50px;
+                background-color: white;
+                color: deeppink;
+                outline-style: solid;
+                outline-color: black;
+                font-size: 20px;
+                font-weight: bold;
+            }
+
         </style>
 
         <script>
@@ -169,6 +180,7 @@
             function changelanguage(val) {
 
                 if(val == "tr") {
+                    document.getElementById("buttontext").textContent = "Menü"
                     document.getElementById("home").textContent = "Ana Ekran";
                     document.getElementById("aboutme").textContent = "Benimle İlgili";
                     document.getElementById("language").textContent = "Dil";
@@ -186,6 +198,7 @@
                 }
 
                 else if(val == "en") {
+                    document.getElementById("buttontext").textContent = "Menu"
                     document.getElementById("home").textContent = "Home";
                     document.getElementById("aboutme").textContent = "About Me";
                     document.getElementById("language").textContent = "Language";
@@ -284,6 +297,7 @@
             <h1 class="text-menudown", style="top: 190px; display: none;" id="projects", onclick="openprojects()">Projects</h1>
             <button  id="spider", class="spider-button-down", onclick="movedownmenu()">,
                 <div class="spiderweb"></div>
+                <div class="button-text", id="buttontext">Menu</div>
             </button>
         </div>
     </body>
