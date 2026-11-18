@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+
+<link rel="stylesheet", href="style.css"/>
+
+<html>
+    <div class="aboutme_header">
+        <h1 id="greetings">Hi! Greetings! Hello!</h1>
+    </div>
+    <p class="homepage_text">My Interests:</p>
+
+    <div class="aboutme_carousel">
+        <div class="aboutme_carousel_item", style="background-color: #fdffb6;">
+            <h1>Ori</h1>
+            <img src="ori.png", alt="a photo of ori">
+            <p>Ori and the Blind Forest is the first game that really started me on gaming. It is the reason I want to develop my own games, especially metroidvanias.</p>
+        </div>
+        <div class="aboutme_carousel_item", style="background-color: #ffc6ff;">
+            <h1>Nausicää</h1>
+            <img src="nausicaa.jpg", alt="nausicää poster">
+            <p>Nausicää and the Windy Valley is my favorite movie ever. I love how Nausicää is such a hopeful character that can see the good in everyone. And of course the art is gorgeous. I especially love the designs of the bugs.</p>
+        </div>
+        <div class="aboutme_carousel_item", style="background-color: #fdffb6;">
+            <h1>Tarantulas</h1>
+            <img src="tarantula.jpg", alt="a photo of a brazilian black tarantula">
+            <p>I find tarantulas extremely cute. I especially love Brazilian Black Tarantula because of their friendly nature and beautiful velvety black exoskeleton.</p>
+        </div>
+        <div class="aboutme_carousel_item", style="background-color: #ffc6ff;">
+            <h1>C++</h1>
+            <img src="c++.png", alt="logo of c++">
+            <p>I started my programming journey with C. Naturally, after a while I learned C++ and stuck to it mostly. Of course I learned other programming languages, but my favorite is still C++.</p>
+        </div>
+        <div class="aboutme_carousel_item", style="background-color: #fdffb6;">
+            <h1>SFML</h1>
+            <img src="sfml.png", alt="logo of sfml">
+            <p>Simple and Fast Multimedia Library, also known as SFML, is an open source library I'd recommend any dev who wants to make a 2D game without an engine. It's the main library I use for my games.</p>
+        </div>
+    </div> 
+
+    <div class="contactme">pastelrainbowtoast@gmail.com</div>
+
+    <div class="feathers_left_column"></div>
+    <div style="width: 20px; top: 0; bottom: 0; background-color: black; left: 0; position: fixed;"></div>
+
+    <div class="feathers_right_column"></div>
+    <div style="width: 20px; top: 0; bottom: 0; background-color: black; right: 0; position: fixed;"></div>
+
+    <div class="context_menu", id="contextmenu">
+        <a class="context_menu_text", id="contextmenutexthome", href="index.html">Home</a>
+        <a class="context_menu_text", id="contextmenutextaboutme", href="aboutme.html">About Me</a>
+        <a class="context_menu_text", id="contextmenutextprojects", href="projects.html">Projects</a>
+    </div>
+
+    <div class="context_menu_button" style="background-image: url('context_menu_1.png');", id="contextmenubutton", onclick="whenClickedOnContextMenuButton()"></div>
+</html>
+
+<script>
+    let mousePosX1 = 0;
+    let mousePosY1 = 0;
+    let featherdist = 60;
+    let featherintervaldelay = 40;
+    let featherintervalrepeatamount = 9;
+    let feathermovespeed = 2;
+    let featherrotatespeed = 0.004;
+    let amountoffeathertomove = 3;
+    let maxrotationoffeathers = 0.15;
+    let minrotationoffeathers = 0.05;
+
+    let left_feathers_rotations = [];
+    let left_feathers_current_rotations = [];
+    let left_feathers_positions = [];
+    let right_feathers_rotations = [];
+    let right_feathers_current_rotations = [];
+    let right_feathers_positions = [];
+    let intervals = [];
+    let intervalTimers = [];
+    let intervalTimersEnd = [];
+    let intervalPlaying = [];
+
+    let frameofcontextmenubutton = 1;
+    let intervalofcontextmenubutton;
+    let delayofcontextmenubutton = 50;
+    let directionofanimationcontextmenubutton = 0;
+    let heightofcontextmenu = 0;
+    let directionofcontextmenu = 0;
+    let delayofcontextmenu = 20;
+    let frameofcontextmenuchosen = 0;
+    let intervalofcontextmenutext;
+    let delayofcontextmenutext = 50;
+
+    let growthspeedofgreetings = 1;
+    let currentsizeofgreetings = 40;
+    let delayofgrowthofgreetings = 60;
+
+    setInterval(() => changeSizeofGreetings(), delayofgrowthofgreetings);
+
+    function changeSizeofGreetings() {
+        currentsizeofgreetings += growthspeedofgreetings;
+
+        document.getElementById("greetings").style.fontSize = String(currentsizeofgreetings) + "px";
+
+        if(currentsizeofgreetings == 45) {
+            growthspeedofgreetings = -1;
+        }
+
+        else if(currentsizeofgreetings == 40) {
+            growthspeedofgreetings = 1;
+        }
+    }
+
+    document.addEventListener("mousemove", checkMousePos);
+    
+    document.getElementById("contextmenutexthome").addEventListener("mouseenter", () => startContextMenuTextAnimation("contextmenutexthome"));
+    document.getElementById("contextmenutexthome").addEventListener("mouseleave", () => stopContextMenuTextAnimation("contextmenutexthome"));
+
+    document.getElementById("contextmenutextaboutme").addEventListener("mouseenter", () => startContextMenuTextAnimation("contextmenutextaboutme"));
+    document.getElementById("contextmenutextaboutme").addEventListener("mouseleave", () => stopContextMenuTextAnimation("contextmenutextaboutme"));
+
+    document.getElementById("contextmenutextprojects").addEventListener("mouseenter", () => startContextMenuTextAnimation("contextmenutextprojects"));
+    document.getElementById("contextmenutextprojects").addEventListener("mouseleave", () => stopContextMenuTextAnimation("contextmenutextprojects"));
+
+    function whenHoveredOnContextMenuText(id) {
+        frameofcontextmenuchosen++;
+
+        document.getElementById(id).style.backgroundImage = "url('context_menu_chosen_" + String(frameofcontextmenuchosen) + ".png')";
+
+        if(frameofcontextmenuchosen == 3)
+        {
+            frameofcontextmenuchosen = 0;
+            clearInterval(intervalofcontextmenutext);
+            intervalofcontextmenutext = null;
+        }
+    }
+
+    function startContextMenuTextAnimation(id) {
+        intervalofcontextmenutext = setInterval(() => whenHoveredOnContextMenuText(id), delayofcontextmenutext);
+    }
+
+    function stopContextMenuTextAnimation(id) {
+        clearInterval(intervalofcontextmenutext);
+        frameofcontextmenuchosen = 0;
+        document.getElementById(id).style.backgroundImage = "none";
+    }
+
+    for(let i = 0; i < window.innerHeight; i += featherdist) {
+        const f = document.createElement("div");
+        document.querySelector(".feathers_left_column").appendChild(f);
+        f.id = String(i / featherdist) + "left_feather";
+        f.className = "feather_left";
+        f.style.backgroundImage = setRandomFeather();
+        f.style.position = "absolute";
+        f.style.top = i + "px";
+        left_feathers_positions[i / featherdist] = i;
+        left_feathers_rotations[i / featherdist] = setRandomRotation();
+        left_feathers_current_rotations[i / featherdist] = left_feathers_rotations[i / featherdist];
+        f.style.rotate = String(left_feathers_rotations[i / featherdist]) + "turn";
+        intervalPlaying[i / featherdist] = 0;
+    }
+
+    for(let i = 0; i < window.innerHeight; i += featherdist) {
+        const f = document.createElement("div");
+        document.querySelector(".feathers_right_column").appendChild(f);
+        f.id = String(i / featherdist) + "right_feather";
+        f.className = "feather_right";
+        f.style.backgroundImage = setRandomFeather();
+        f.style.position = "absolute";
+        f.style.top = i + "px";
+        right_feathers_positions[i / featherdist] = i;
+        right_feathers_rotations[i / featherdist] = setRandomRotation();
+        right_feathers_current_rotations[i / featherdist] = right_feathers_rotations[i / featherdist];
+        f.style.rotate = String(right_feathers_rotations[i / featherdist]) + "turn";
+        intervalPlaying[i / featherdist] = 0;
+    }
+
+    function setRandomFeather() {
+        let x = Math.random();
+
+        if(x < 0.2) {
+            return "url('pink_feather.png')";
+        }
+
+        else if(x < 0.4) {
+            return "url('yellow_feather.png')";
+        }
+
+        else if(x < 0.6) {
+            return "url('green_feather.png')";
+        }
+
+        else if(x < 0.8) {
+            return "url('blue_feather.png')";
+        }
+
+        else {
+            return "url('purple_feather.png')";
+        }
+    }
+
+    function setRandomRotation() {
+        return Math.random() * maxrotationoffeathers - minrotationoffeathers;
+    }
+
+    function rotateLeftFeather(ind, move, redo) {
+        let f = document.getElementById(String(ind) + "left_feather");
+
+        left_feathers_positions[ind] += feathermovespeed * move;
+
+        f.style.top = String(left_feathers_positions[ind]) + "px";
+
+        left_feathers_current_rotations[ind] += featherrotatespeed * move;
+
+        f.style.rotate = String(left_feathers_current_rotations[ind]) + "turn";
+
+        intervalTimers[ind]++;
+
+        if(intervalTimers[ind] == intervalTimersEnd[ind]) {
+            clearInterval(intervals[ind]);
+
+            if(redo == 1) {
+                intervalTimers[ind] = 0;
+                intervals[ind] = setInterval(() => rotateLeftFeather(ind, -move, 0), 30);
+            }
+
+            else {
+                intervalPlaying[ind] = 0;
+            }
+        }
+    }
+
+    function rotateRightFeather(ind, move, redo) {
+        let f = document.getElementById(String(ind) + "right_feather");
+
+        right_feathers_positions[ind] += feathermovespeed * move;
+
+        f.style.top = String(right_feathers_positions[ind]) + "px";
+
+        right_feathers_current_rotations[ind] -= featherrotatespeed * move;
+
+        f.style.rotate = String(right_feathers_current_rotations[ind]) + "turn";
+
+        intervalTimers[ind]++;
+
+        if(intervalTimers[ind] == intervalTimersEnd[ind]) {
+            clearInterval(intervals[ind]);
+
+            if(redo == 1) {
+                intervalTimers[ind] = 0;
+                intervals[ind] = setInterval(() => rotateRightFeather(ind, -move, 0), 30);
+            }
+
+            else {
+                intervalPlaying[ind] = 0;
+            }
+        }
+    }
+
+    function pulldownContextMenu() {
+
+        heightofcontextmenu += 20;
+
+        document.getElementById("contextmenu").style.height = String(heightofcontextmenu) + "px";
+        document.getElementById("contextmenubutton").style.top = String(heightofcontextmenu) + "px";
+
+        if(heightofcontextmenu == 280) {
+            directionofcontextmenu = 0;
+            clearInterval(intervalofcontextmenu);
+        }
+    }
+
+    function pullupContextMenu() {
+
+        heightofcontextmenu -= 20;
+
+        document.getElementById("contextmenu").style.height = String(heightofcontextmenu) + "px";
+        document.getElementById("contextmenubutton").style.top = String(heightofcontextmenu) + "px";
+
+        if(heightofcontextmenu == 0) {
+            directionofcontextmenu = 0;
+            clearInterval(intervalofcontextmenu);
+        }
+    }
+
+    function whenClickedOnContextMenuButton() {
+        if(directionofcontextmenu == 0) {
+            if(heightofcontextmenu == 0) {
+                directionofcontextmenu = 1;
+                intervalofcontextmenu = setInterval(() => pulldownContextMenu(), delayofcontextmenu);
+            }
+
+            else {
+                directionofcontextmenu = -1;
+                intervalofcontextmenu = setInterval(() => pullupContextMenu(), delayofcontextmenu);
+
+                directionofanimationcontextmenubutton = -1;
+                clearInterval(intervalofcontextmenubutton);
+                intervalofcontextmenubutton = setInterval(() => closeContextMenu(), delayofcontextmenubutton);
+            }
+        }
+
+        else if(directionofcontextmenu == 1) {
+            directionofcontextmenu = -1;
+            clearInterval(intervalofcontextmenu);
+            intervalofcontextmenu = setInterval(() => pullupContextMenu(), delayofcontextmenu);
+
+            directionofanimationcontextmenubutton = -1;
+            clearInterval(intervalofcontextmenubutton);
+            intervalofcontextmenubutton = setInterval(() => closeContextMenu(), delayofcontextmenubutton);
+        }
+
+        else {
+            directionofcontextmenu = 1;
+            clearInterval(intervalofcontextmenu);
+            intervalofcontextmenu = setInterval(() => pulldownContextMenu(), delayofcontextmenu);
+        }
+    }
+
+    function openContextMenu() {
+        
+        frameofcontextmenubutton++;
+
+        document.getElementById("contextmenubutton").style.backgroundImage = "url('context_menu_" + String(frameofcontextmenubutton) + ".png')";
+
+        if(frameofcontextmenubutton == 7) {
+            directionofanimationcontextmenubutton = 0;
+            clearInterval(intervalofcontextmenubutton);
+        }
+    }
+
+    function closeContextMenu() {
+        
+        frameofcontextmenubutton--;
+
+        document.getElementById("contextmenubutton").style.backgroundImage = "url('context_menu_" + String(frameofcontextmenubutton) + ".png')";
+
+        if(frameofcontextmenubutton == 1) {
+            directionofanimationcontextmenubutton = 0;
+            clearInterval(intervalofcontextmenubutton);
+        }
+    }
+
+    function checkMousePos(event) {
+        let mousePosX2 = event.clientX;
+        let mousePosY2 = event.clientY;
+
+        if(mousePosX2 < 120) {
+            for(let i = 0; i < amountoffeathertomove; i++) {
+
+                if(i <= Math.floor(mousePosY2 / featherdist)) {
+                    let ind1 = Math.floor(mousePosY2 / featherdist - (i + 1))
+                   
+                    if(intervalPlaying[ind1] == 0) {
+                        intervalPlaying[ind1] = 1;
+                        intervals[ind1] = setInterval(() => rotateLeftFeather(ind1, -1, 1), featherintervaldelay)
+                        intervalTimers[ind1] = 0;
+                        intervalTimersEnd[ind1] = 5 - i;
+                    }
+                }
+
+                if(i * featherdist + mousePosY2 <= window.innerHeight) {
+
+                    let ind2 = Math.floor(mousePosY2 / featherdist) + i;
+
+                    if(intervalPlaying[ind2] == 0) {
+                        intervalPlaying[ind2] = 1;
+                        intervals[ind2] = setInterval(() => rotateLeftFeather(ind2, 1, 1), featherintervaldelay)
+                        intervalTimers[ind2] = 0;
+                        intervalTimersEnd[ind2] = 5 - i;
+                    }
+                }
+            }
+        }
+
+        else if(mousePosX2 > window.innerWidth - 120) {
+            for(let i = 0; i < amountoffeathertomove; i++) {
+
+                if(i <= Math.floor(mousePosY2 / featherdist)) {
+                    let ind1 = Math.floor(mousePosY2 / featherdist - (i + 1))
+                   
+                    if(intervalPlaying[ind1] == 0) {
+                        intervalPlaying[ind1] = 1;
+                        intervals[ind1] = setInterval(() => rotateRightFeather(ind1, -1, 1), featherintervaldelay)
+                        intervalTimers[ind1] = 0;
+                        intervalTimersEnd[ind1] = featherintervalrepeatamount - i;
+                    }
+                }
+
+               if(i * featherdist + mousePosY2 <= window.innerHeight) {
+
+                    let ind2 = Math.floor(mousePosY2 / featherdist) + i;
+
+                    if(intervalPlaying[ind2] == 0) {
+                        intervalPlaying[ind2] = 1;
+                        intervals[ind2] = setInterval(() => rotateRightFeather(ind2, 1, 1), featherintervaldelay)
+                        intervalTimers[ind2] = 0;
+                        intervalTimersEnd[ind2] = featherintervalrepeatamount - i;
+                    }
+                }
+            }
+        }
+
+        if(mousePosX2 > window.innerWidth / 2 - 50 && mousePosX2 < window.innerWidth / 2 + 50 && mousePosY2 < 100 && heightofcontextmenu == 0) {
+            if(directionofanimationcontextmenubutton != 1 && frameofcontextmenubutton < 7) {
+                directionofanimationcontextmenubutton = 1;
+                clearInterval(intervalofcontextmenubutton);
+                intervalofcontextmenubutton = setInterval(() => openContextMenu(), delayofcontextmenubutton);
+            }
+        }
+
+        else if (directionofanimationcontextmenubutton != -1 && frameofcontextmenubutton > 1 && heightofcontextmenu == 0) {
+            directionofanimationcontextmenubutton = -1;
+            clearInterval(intervalofcontextmenubutton);
+            intervalofcontextmenubutton = setInterval(() => closeContextMenu(), delayofcontextmenubutton);
+        }
+
+        mousePosX1 = mousePosX2;
+        mousePosY1 = mousePosY2;
+    }
+</script>
