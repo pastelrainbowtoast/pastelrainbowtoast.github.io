@@ -1,258 +1,403 @@
 <!DOCTYPE html>
+
+<link rel="stylesheet", href="style.css"/>
+
 <html>
-    <body>
-        <style>
+    <h1 class="homepage_header">PastelRainbowToast</h1>
+    <div class="homepage_logo">
+        <img src="logo_transparent.png", alt="logo", id="logo">
+    </div>
+    <p class="homepage_text">Hi! I'm PastelRainbowToast. I'm a uni student with the dream of becoming a game dev. Watch me suffer to achieve my dream step by step!</p>
 
-            .spider-button-down {
-                width: 100px;
-                height: 100px;
-                border: none;
-                cursor: pointer;
-                position: absolute;
-                right: 0;
-                top: 100%;
-                background: url('spider_down.png') no-repeat center center;
-                background-size: cover;
-            }
+    <div class="homepage_projects">
+        <h1>My Upcoming Game: Delve Into the Water</h1>
+        <p>Your Mother has been kidnapped by The Monster! You have to get her back! Though... Why has The Monster taken Your Mother? That is a question you have to find out yourself.</p>
+        <img src="delveintothewater1.png", alt="delve into the water title scene">
+    </div>
 
-            .spider-button-down:hover {
-                background: url('spider_down_hovered.png') no-repeat center center;
-                background-size: cover;
-            }
+    <div class="contactme">pastelrainbowtoast@gmail.com</div>
 
-            .spider-button-up {
-                width: 100px;
-                height: 100px;
-                border: none;
-                cursor: pointer;
-                position: absolute;
-                right: 0;
-                top: 100%;
-                background: url('spider_up.png') no-repeat center center;
-                background-size: cover;
-            }
+    <div class="feathers_left_column"></div>
+    <div style="width: 20px; top: 0; bottom: 0; background-color: black; left: 0; position: fixed;"></div>
 
-            .spider-button-up:hover {
-                background: url('spider_up_hovered.png') no-repeat center center;
-                background-size: cover;
-            }
+    <div class="feathers_right_column"></div>
+    <div style="width: 20px; top: 0; bottom: 0; background-color: black; right: 0; position: fixed;"></div>
 
-            .spiderweb {
-                width: 200px;
-                height: 200px;
-                border: none;
-                position: absolute;
-                right: 0;
-                top: 0;
-                background: url('spiderweb.png') no-repeat center center;
-                background-size: cover;
-                z-index: -1;
-            }
+    <div class="context_menu", id="contextmenu">
+        <a class="context_menu_text", id="contextmenutexthome", href="index.html">Home</a>
+        <a class="context_menu_text", id="contextmenutextaboutme", href="aboutme.html">About Me</a>
+        <a class="context_menu_text", id="contextmenutextprojects", href="projects.html">Projects</a>
+    </div>
 
-            .menudown {
-                height: 70px;
-                border: none;
-                position: fixed;
-                left: 0;
-                right: 0;
-                top: 0;
-                background: url('menudown.png') no-repeat bottom;
-                background-size: cover;
-            }
-
-            .text-menudown {
-                position: absolute;
-                left: 15%;
-                color:black;
-                font-size: 50px;
-                text-decoration: none;
-                font-weight: bold;
-            }
-
-            .text-menudown:hover {
-                color:deeppink;
-            }
-
-            .text-language {
-                position: absolute;
-                color: black;
-                font-size: 30px;
-            }
-
-            .home-text {
-                position: relative;
-                color: black;
-                font-size: 25px;
-            }
-
-            .home-header {
-                position: relative;
-                color:black;
-                font-size: 30px;
-            }
-
-            .aboutme-header {
-                position: relative;
-                text-align: center;
-                color:black;
-                font-size: 30px;
-            }
-
-            .aboutme-text {
-                position: relative;
-                text-align: center;
-                color: black;
-                font-size: 25px;
-                width: 70%;
-                left: 15%;
-            }
-
-            .seperator {
-                background: url('seperator.png') repeat;
-                background-size: contain;
-                height: 90px;
-                left: 0;
-                right: 0;
-                bottom: 0;
-            }
-
-            .button-text {
-                position: relative;
-                top: 50px;
-                background-color: white;
-                color: deeppink;
-                outline-style: solid;
-                outline-color: black;
-                font-size: 20px;
-                font-weight: bold;
-                border-radius: 25px;
-            }
-
-        </style>
-
-        <script>
-            let menudown = false;
-            let menudowntimer;
-            let currentheightofmenudown = 50;
-
-            function intervalmenudown() {
-                currentheightofmenudown += 20;
-                document.getElementById("menudown").style.height = currentheightofmenudown.toString() + 'px';
-
-                if(currentheightofmenudown == 550) {
-                    document.getElementById("home").style.display = 'block';
-                    document.getElementById("aboutme").style.display = 'block';
-                    document.getElementById("language").style.display = 'block';
-                    document.getElementById("projects").style.display = 'block';
-                    document.getElementById("selectlanguage").style.display = 'block';
-                    clearInterval(menudowntimer);
-                }
-            }
-
-            function intervalmenuup() {
-                currentheightofmenudown -= 20;
-                document.getElementById("menudown").style.height = currentheightofmenudown.toString() + 'px';
-
-                if(currentheightofmenudown == 70) {
-                    
-                    clearInterval(menudowntimer);
-                }
-            }
-
-            function movedownmenu() {
-                if(menudown) {
-                    menudown = false;
-
-                    document.getElementById("home").style.display = 'none';
-                    document.getElementById("aboutme").style.display = 'none';
-                    document.getElementById("language").style.display = 'none';
-                    document.getElementById("projects").style.display = 'none';
-                    document.getElementById("selectlanguage").style.display = 'none';
-                    document.getElementById("spider").className = "spider-button-down";
-                    menudowntimer = setInterval(intervalmenuup, 10);
-                }
-
-                else {
-                    menudown = true;
-
-                    document.getElementById("spider").className = "spider-button-up";
-                    menudowntimer = setInterval(intervalmenudown, 10);
-                }
-            }
-
-            function changelanguage(val) {
-
-                if(val == "tr") {
-                    document.getElementById("buttontext").textContent = "Menü"
-                    document.getElementById("home").textContent = "Ana Ekran";
-                    document.getElementById("aboutme").textContent = "Benimle İlgili";
-                    document.getElementById("language").textContent = "Dil";
-                    document.getElementById("projects").textContent = "Projeler";
-                    document.getElementById("greetings").textContent = "Merhaba!";
-                    document.getElementById("homefirstparagraph").textContent = "Ben Damla ya da kullanıcı adımla PastelRainbowToast. Oyun geliştiricisi olmak isteyen bir üniversite öğrencisiyim. Eziyet çeke çeke hayalime ulaşmama tanık ol!";
-                    document.getElementById("delveintothewaterheaderhome").textContent = "Gelecek Oyunum: Delve into the Water";
-                    document.getElementById("delveintothewaterexplanationhome").textContent = "Bir platform oyunu. Ana karakterin annesi bir canavar tarafından kaçırılır. Seni durdurmaya çalışan düşmanları atlat ve anneni kurtar. Ne yazık ki düşmanlara saldıramazsın. Zıpla, kaç, düşmanlardan kurtulmak için daha farklı yöntemler düşün. Belki canavarın neden anneni kaçırdığını da keşfedebilirsin?";
-                    document.getElementById("contactme").textContent = "Bana Ulaş";
-                    document.getElementById("contacts").textContent = "Eğer herhangi bir sebepten dolayı bana ulaşmak istersen (belki beraber çalışmak istersin?) bana pastelrainbowtoast@gmail.com üzerinden ulaşabilirsin";
-                }
-
-                else if(val == "en") {
-                    document.getElementById("buttontext").textContent = "Menu"
-                    document.getElementById("home").textContent = "Home";
-                    document.getElementById("aboutme").textContent = "About Me";
-                    document.getElementById("language").textContent = "Language";
-                    document.getElementById("projects").textContent = "Projects";
-                    document.getElementById("greetings").textContent = "Greetings!";
-                    document.getElementById("homefirstparagraph").textContent = "I am Damla, also known as my username PastelRainbowToast. I am a uni student with the dream of becoming a game dev. Watch me suffer to achieve my dream step by step!";
-                    document.getElementById("delveintothewaterheaderhome").textContent = "My Upcoming Game: Delve into the Water";
-                    document.getElementById("delveintothewaterexplanationhome").textContent = "A platformer where you play as a character whose mother gets kidnapped by a monster. Try to save your mother while dodging other enemies that are trying to stop you. Unfortunately you cannot fight back, so jump and dodge and think of other ways to get rid of them. And maybe you can learn why the monster took your mother?";
-                    document.getElementById("contactme").textContent = "Contact Me";
-                    document.getElementById("contacts").textContent = "If you want to contact me for some reason (maybe you want to work together?) you can contact me on pastelrainbowtoast@gmail.com";
-                }
-            }
-
-        </script>
-
-        <div style="height: 90px;"></div>        
-
-        <div style="display: flex; flex-direction: column;", id="homepage">
-            
-            <div style="height: 400px; display: flex;">
-                <img src="myphoto1.jpg", alt="a photo of me", style="height: 400px; left: 5%; position: relative;">
-                <h1 class="home-header", style="top: 90px; left: 7% ; position: relative;", id="greetings">Greetings!</h1>
-                <p class="home-text", style="top: 150px; width: 35%; left: 3%; position: relative;", id="homefirstparagraph">I'm Damla, also known as my username PastelRainbowToast. I'm a uni student with the dream of becoming a game dev. Watch me suffer to achieve my dream step by step!</p>
-            </div>
-            
-            <div style="height: 90px;"></div>
-
-            <div style="height: 400px; display: flex;">
-                <h1 class="home-header", style="left: 10px; width: 35%;", id="delveintothewaterheaderhome">My Upcoming Game: Delve into the Water</h1>
-                <p class="home-text", style="left: -30%; width: 35%; top: 90px;" id="delveintothewaterexplanationhome">A platformer where you play as a character whose mother gets kidnapped by a monster. Try to save your mother while dodging other enemies that are trying to stop you. Unfortunately you cannot fight back, so jump and dodge and think of other ways to get rid of them. And maybe you can learn why the monster took your mother?</p>
-                <img src="delveintothewater1.png", alt="a photo of my game Delve into the Water", style="position: absolute; left: 45%; width: 45%;">
-            </div>
-        </div>
-
-        <div style="height: 90px;"></div>
-
-        <h1 class="home-header", style="top: 10px; left: 10px;", id="contactme">Contact Me</h1>
-        <p class="home-text", style="top: 10px; left: 10px;", id="contacts">If you want to contact me for some reason (maybe you want to work together?) you can contact me on pastelrainbowtoast@gmail.com</p>
-
-        <div class="seperator"></div>
-
-        <div id="menudown", class="menudown">
-            <h1 class="text-language", style="display: none; right: 7%; top: 50px;", id="language">Language</h1>
-            <select class="text-language", style="right: 5%; display: none; top: 120px;", onchange="changelanguage(this.value)", id="selectlanguage">
-                    <option class="text-language", value="en">EN</option>
-                    <option class="text-language", value="tr">TR</option>
-                </select>
-            
-            <a class="text-menudown", style="top: 90px; display: none;", id="home">Home</a>
-            <a class="text-menudown", style="top: 140px; display: none;", id="aboutme" href="aboutmepage.html">About Me</a>
-            <a class="text-menudown", style="top: 190px; display: none;" id="projects", href="projectspage.html">Projects</a>
-            <button  id="spider", class="spider-button-down", onclick="movedownmenu()">,
-                <div class="spiderweb"></div>
-                <div class="button-text", id="buttontext">Menu</div>
-            </button>
-        </div>
-    </body>
+    <div class="context_menu_button" style="background-image: url('context_menu_1.png');", id="contextmenubutton", onclick="whenClickedOnContextMenuButton()"></div>
 </html>
+
+<script>
+    let mousePosX1 = 0;
+    let mousePosY1 = 0;
+    let featherdist = 60;
+    let featherintervaldelay = 40;
+    let featherintervalrepeatamount = 9;
+    let feathermovespeed = 2;
+    let featherrotatespeed = 0.004;
+    let amountoffeathertomove = 3;
+    let maxrotationoffeathers = 0.15;
+    let minrotationoffeathers = 0.05;
+
+    let left_feathers_rotations = [];
+    let left_feathers_current_rotations = [];
+    let left_feathers_positions = [];
+    let right_feathers_rotations = [];
+    let right_feathers_current_rotations = [];
+    let right_feathers_positions = [];
+    let intervals = [];
+    let intervalTimers = [];
+    let intervalTimersEnd = [];
+    let intervalPlaying = [];
+
+    let frameofcontextmenubutton = 1;
+    let intervalofcontextmenubutton;
+    let delayofcontextmenubutton = 50;
+    let directionofanimationcontextmenubutton = 0;
+    let heightofcontextmenu = 0;
+    let directionofcontextmenu = 0;
+    let delayofcontextmenu = 20;
+    let frameofcontextmenuchosen = 0;
+    let intervalofcontextmenutext;
+    let delayofcontextmenutext = 50;
+
+    let currentrotationoflogo = 0;
+    let speedofrotationoflogo = 0.005;
+    let delayofrotationoflogo = 50;
+
+    document.addEventListener("mousemove", checkMousePos);
+    
+    document.getElementById("contextmenutexthome").addEventListener("mouseenter", () => startContextMenuTextAnimation("contextmenutexthome"));
+    document.getElementById("contextmenutexthome").addEventListener("mouseleave", () => stopContextMenuTextAnimation("contextmenutexthome"));
+
+    document.getElementById("contextmenutextaboutme").addEventListener("mouseenter", () => startContextMenuTextAnimation("contextmenutextaboutme"));
+    document.getElementById("contextmenutextaboutme").addEventListener("mouseleave", () => stopContextMenuTextAnimation("contextmenutextaboutme"));
+
+    document.getElementById("contextmenutextprojects").addEventListener("mouseenter", () => startContextMenuTextAnimation("contextmenutextprojects"));
+    document.getElementById("contextmenutextprojects").addEventListener("mouseleave", () => stopContextMenuTextAnimation("contextmenutextprojects"));
+
+    setInterval(() => rotateLogo(), delayofrotationoflogo);
+
+    document.getElementById("logo").addEventListener("mouseenter", () => speedupLogoRotation());
+    document.getElementById("logo").addEventListener("mouseleave", () => slowdownLogoRotation());
+
+    function rotateLogo() {
+        currentrotationoflogo += speedofrotationoflogo;
+
+        if(currentrotationoflogo == 1) {
+            currentrotationoflogo = 0;
+        }
+
+        document.getElementById("logo").style.rotate = String(currentrotationoflogo) + "turn";
+    }
+
+    function speedupLogoRotation() {
+        speedofrotationoflogo = 0.01;
+    }
+
+    function slowdownLogoRotation() {
+        speedofrotationoflogo = 0.005;
+    }
+
+    function whenHoveredOnContextMenuText(id) {
+        frameofcontextmenuchosen++;
+
+        document.getElementById(id).style.backgroundImage = "url('context_menu_chosen_" + String(frameofcontextmenuchosen) + ".png')";
+
+        if(frameofcontextmenuchosen == 3)
+        {
+            frameofcontextmenuchosen = 0;
+            clearInterval(intervalofcontextmenutext);
+            intervalofcontextmenutext = null;
+        }
+    }
+
+    function startContextMenuTextAnimation(id) {
+        intervalofcontextmenutext = setInterval(() => whenHoveredOnContextMenuText(id), delayofcontextmenutext);
+    }
+
+    function stopContextMenuTextAnimation(id) {
+        clearInterval(intervalofcontextmenutext);
+        frameofcontextmenuchosen = 0;
+        document.getElementById(id).style.backgroundImage = "none";
+    }
+
+    for(let i = 0; i < window.innerHeight; i += featherdist) {
+        const f = document.createElement("div");
+        document.querySelector(".feathers_left_column").appendChild(f);
+        f.id = String(i / featherdist) + "left_feather";
+        f.className = "feather_left";
+        f.style.backgroundImage = setRandomFeather();
+        f.style.position = "absolute";
+        f.style.top = i + "px";
+        left_feathers_positions[i / featherdist] = i;
+        left_feathers_rotations[i / featherdist] = setRandomRotation();
+        left_feathers_current_rotations[i / featherdist] = left_feathers_rotations[i / featherdist];
+        f.style.rotate = String(left_feathers_rotations[i / featherdist]) + "turn";
+        intervalPlaying[i / featherdist] = 0;
+    }
+
+    for(let i = 0; i < window.innerHeight; i += featherdist) {
+        const f = document.createElement("div");
+        document.querySelector(".feathers_right_column").appendChild(f);
+        f.id = String(i / featherdist) + "right_feather";
+        f.className = "feather_right";
+        f.style.backgroundImage = setRandomFeather();
+        f.style.position = "absolute";
+        f.style.top = i + "px";
+        right_feathers_positions[i / featherdist] = i;
+        right_feathers_rotations[i / featherdist] = setRandomRotation();
+        right_feathers_current_rotations[i / featherdist] = right_feathers_rotations[i / featherdist];
+        f.style.rotate = String(right_feathers_rotations[i / featherdist]) + "turn";
+        intervalPlaying[i / featherdist] = 0;
+    }
+
+    function setRandomFeather() {
+        let x = Math.random();
+
+        if(x < 0.2) {
+            return "url('pink_feather.png')";
+        }
+
+        else if(x < 0.4) {
+            return "url('yellow_feather.png')";
+        }
+
+        else if(x < 0.6) {
+            return "url('green_feather.png')";
+        }
+
+        else if(x < 0.8) {
+            return "url('blue_feather.png')";
+        }
+
+        else {
+            return "url('purple_feather.png')";
+        }
+    }
+
+    function setRandomRotation() {
+        return Math.random() * maxrotationoffeathers - minrotationoffeathers;
+    }
+
+    function rotateLeftFeather(ind, move, redo) {
+        let f = document.getElementById(String(ind) + "left_feather");
+
+        left_feathers_positions[ind] += feathermovespeed * move;
+
+        f.style.top = String(left_feathers_positions[ind]) + "px";
+
+        left_feathers_current_rotations[ind] += featherrotatespeed * move;
+
+        f.style.rotate = String(left_feathers_current_rotations[ind]) + "turn";
+
+        intervalTimers[ind]++;
+
+        if(intervalTimers[ind] == intervalTimersEnd[ind]) {
+            clearInterval(intervals[ind]);
+
+            if(redo == 1) {
+                intervalTimers[ind] = 0;
+                intervals[ind] = setInterval(() => rotateLeftFeather(ind, -move, 0), 30);
+            }
+
+            else {
+                intervalPlaying[ind] = 0;
+            }
+        }
+    }
+
+    function rotateRightFeather(ind, move, redo) {
+        let f = document.getElementById(String(ind) + "right_feather");
+
+        right_feathers_positions[ind] += feathermovespeed * move;
+
+        f.style.top = String(right_feathers_positions[ind]) + "px";
+
+        right_feathers_current_rotations[ind] -= featherrotatespeed * move;
+
+        f.style.rotate = String(right_feathers_current_rotations[ind]) + "turn";
+
+        intervalTimers[ind]++;
+
+        if(intervalTimers[ind] == intervalTimersEnd[ind]) {
+            clearInterval(intervals[ind]);
+
+            if(redo == 1) {
+                intervalTimers[ind] = 0;
+                intervals[ind] = setInterval(() => rotateRightFeather(ind, -move, 0), 30);
+            }
+
+            else {
+                intervalPlaying[ind] = 0;
+            }
+        }
+    }
+
+    function pulldownContextMenu() {
+
+        heightofcontextmenu += 20;
+
+        document.getElementById("contextmenu").style.height = String(heightofcontextmenu) + "px";
+        document.getElementById("contextmenubutton").style.top = String(heightofcontextmenu) + "px";
+
+        if(heightofcontextmenu == 280) {
+            directionofcontextmenu = 0;
+            clearInterval(intervalofcontextmenu);
+        }
+    }
+
+    function pullupContextMenu() {
+
+        heightofcontextmenu -= 20;
+
+        document.getElementById("contextmenu").style.height = String(heightofcontextmenu) + "px";
+        document.getElementById("contextmenubutton").style.top = String(heightofcontextmenu) + "px";
+
+        if(heightofcontextmenu == 0) {
+            directionofcontextmenu = 0;
+            clearInterval(intervalofcontextmenu);
+        }
+    }
+
+    function whenClickedOnContextMenuButton() {
+        if(directionofcontextmenu == 0) {
+            if(heightofcontextmenu == 0) {
+                directionofcontextmenu = 1;
+                intervalofcontextmenu = setInterval(() => pulldownContextMenu(), delayofcontextmenu);
+            }
+
+            else {
+                directionofcontextmenu = -1;
+                intervalofcontextmenu = setInterval(() => pullupContextMenu(), delayofcontextmenu);
+
+                directionofanimationcontextmenubutton = -1;
+                clearInterval(intervalofcontextmenubutton);
+                intervalofcontextmenubutton = setInterval(() => closeContextMenu(), delayofcontextmenubutton);
+            }
+        }
+
+        else if(directionofcontextmenu == 1) {
+            directionofcontextmenu = -1;
+            clearInterval(intervalofcontextmenu);
+            intervalofcontextmenu = setInterval(() => pullupContextMenu(), delayofcontextmenu);
+
+            directionofanimationcontextmenubutton = -1;
+            clearInterval(intervalofcontextmenubutton);
+            intervalofcontextmenubutton = setInterval(() => closeContextMenu(), delayofcontextmenubutton);
+        }
+
+        else {
+            directionofcontextmenu = 1;
+            clearInterval(intervalofcontextmenu);
+            intervalofcontextmenu = setInterval(() => pulldownContextMenu(), delayofcontextmenu);
+        }
+    }
+
+    function openContextMenu() {
+        
+        frameofcontextmenubutton++;
+
+        document.getElementById("contextmenubutton").style.backgroundImage = "url('context_menu_" + String(frameofcontextmenubutton) + ".png')";
+
+        if(frameofcontextmenubutton == 7) {
+            directionofanimationcontextmenubutton = 0;
+            clearInterval(intervalofcontextmenubutton);
+        }
+    }
+
+    function closeContextMenu() {
+        
+        frameofcontextmenubutton--;
+
+        document.getElementById("contextmenubutton").style.backgroundImage = "url('context_menu_" + String(frameofcontextmenubutton) + ".png')";
+
+        if(frameofcontextmenubutton == 1) {
+            directionofanimationcontextmenubutton = 0;
+            clearInterval(intervalofcontextmenubutton);
+        }
+    }
+
+    function checkMousePos(event) {
+        let mousePosX2 = event.clientX;
+        let mousePosY2 = event.clientY;
+
+        if(mousePosX2 < 120) {
+            for(let i = 0; i < amountoffeathertomove; i++) {
+
+                if(i <= Math.floor(mousePosY2 / featherdist)) {
+                    let ind1 = Math.floor(mousePosY2 / featherdist - (i + 1))
+                   
+                    if(intervalPlaying[ind1] == 0) {
+                        intervalPlaying[ind1] = 1;
+                        intervals[ind1] = setInterval(() => rotateLeftFeather(ind1, -1, 1), featherintervaldelay)
+                        intervalTimers[ind1] = 0;
+                        intervalTimersEnd[ind1] = 5 - i;
+                    }
+                }
+
+                if(i * featherdist + mousePosY2 <= window.innerHeight) {
+
+                    let ind2 = Math.floor(mousePosY2 / featherdist) + i;
+
+                    if(intervalPlaying[ind2] == 0) {
+                        intervalPlaying[ind2] = 1;
+                        intervals[ind2] = setInterval(() => rotateLeftFeather(ind2, 1, 1), featherintervaldelay)
+                        intervalTimers[ind2] = 0;
+                        intervalTimersEnd[ind2] = 5 - i;
+                    }
+                }
+            }
+        }
+
+        else if(mousePosX2 > window.innerWidth - 120) {
+            for(let i = 0; i < amountoffeathertomove; i++) {
+
+                if(i <= Math.floor(mousePosY2 / featherdist)) {
+                    let ind1 = Math.floor(mousePosY2 / featherdist - (i + 1))
+                   
+                    if(intervalPlaying[ind1] == 0) {
+                        intervalPlaying[ind1] = 1;
+                        intervals[ind1] = setInterval(() => rotateRightFeather(ind1, -1, 1), featherintervaldelay)
+                        intervalTimers[ind1] = 0;
+                        intervalTimersEnd[ind1] = featherintervalrepeatamount - i;
+                    }
+                }
+
+               if(i * featherdist + mousePosY2 <= window.innerHeight) {
+
+                    let ind2 = Math.floor(mousePosY2 / featherdist) + i;
+
+                    if(intervalPlaying[ind2] == 0) {
+                        intervalPlaying[ind2] = 1;
+                        intervals[ind2] = setInterval(() => rotateRightFeather(ind2, 1, 1), featherintervaldelay)
+                        intervalTimers[ind2] = 0;
+                        intervalTimersEnd[ind2] = featherintervalrepeatamount - i;
+                    }
+                }
+            }
+        }
+
+        if(mousePosX2 > window.innerWidth / 2 - 50 && mousePosX2 < window.innerWidth / 2 + 50 && mousePosY2 < 100 && heightofcontextmenu == 0) {
+            if(directionofanimationcontextmenubutton != 1 && frameofcontextmenubutton < 7) {
+                directionofanimationcontextmenubutton = 1;
+                clearInterval(intervalofcontextmenubutton);
+                intervalofcontextmenubutton = setInterval(() => openContextMenu(), delayofcontextmenubutton);
+            }
+        }
+
+        else if (directionofanimationcontextmenubutton != -1 && frameofcontextmenubutton > 1 && heightofcontextmenu == 0) {
+            directionofanimationcontextmenubutton = -1;
+            clearInterval(intervalofcontextmenubutton);
+            intervalofcontextmenubutton = setInterval(() => closeContextMenu(), delayofcontextmenubutton);
+        }
+
+        mousePosX1 = mousePosX2;
+        mousePosY1 = mousePosY2;
+    }
+</script>
